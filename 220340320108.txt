@@ -1,0 +1,86 @@
+Section I
+============================================================================================
+create database shubham;
+use shubham;
+create table DEPT2(DEPTNO int(2), DNAME varchar(15),LOC varchar (10));
+insert into DEPT2(DEPTNO,DNAME,LOC) values(10, 'ACCOUNTING' , 'NEW YORK'),
+(20, 'RESEARCH' ,'DALLAS'),
+(30, 'SALES', 'CHICAGO'),
+(40, 'OPERATIONS', 'BOSTON');
+
+create table EMP2(EMPNO int(4), ENAME varchar(10), JOB varchar (9),HIREDATE date, SAL float(7,2),COMM float(7,2),DEPTNO int(2));
+insert into EMP2(EMPNO,ENAME,JOB,HIREDATE,SAL,COMM,DEPTNO) values(7839, 'KING', 'MANAGER' ,'1991-11-17', 5000, NULL, 10),
+(7698, 'BLAKE', 'CLERK', '1981-05-01', 2850, NULL, 30),
+(7782, 'CLARK', 'MANAGER', '1981-06-09', 2450, NULL, 10),
+(7566, 'JONES', 'CLERK', '1981-04-02', 2975, NULL, 20),
+(7654, 'MARTIN', 'SALESMAN', '1981-09-28', 1250, 1400, 30),
+(7499, 'ALLEN', 'SALESMAN', '1981-02-20', 1600, 300, 30);
+select*from DEPT2;
+select*from EMP2;
+
+select ENAME from emp2 where sal between 2500 and 5000;
+
+SELECT ENAME from emp2 order by ENAME desc;
+
+select LOWER (JOB) from emp2;
+
+select ENAME, length (ENAME) from emp2;
+
+select DEPTNO , count(EMPNO) from emp2 group by DEPTNO;
+
+select DNAME ,ENAME from DEPT2 , emp2 where DEPT2.DEPTNO = emp2.DEPTNO;
+
+select POSITION("AR" IN "ENAME") from emp2; 
+
+select ENAME, 0.20*SAL HRA from emp2;
+========================================================================================================
+
+SECTION 2
+Q.1
+
+
+CREATE TABLE DEMO(OUTPUT varchar(10));
+
+delimiter //
+create procedure PROC (A varchar(30), B varchar(30))
+Begin
+if INSTR(A,B)>0 OR INSTR(B,A) THEN
+INSERT INTO DEMO VALUES ('EXISTS');
+ ELSE 
+INSERT INTO DEMO VALUES ('NOT EXISTS');
+END IF;
+END; //
+delimiter ;
+
+call PROC('DAC', 'CDAC');
+
+SELECT * FROM DEMO;
+
+================================================================================
+
+
+Q.2 
+
+
+create table tempp (triangle varchar (20));
+
+delimiter //
+create function FUN(a int, b int, c int)
+returns boolean
+deterministic
+begin
+if (a+b>c) and (b+c>a) and (a+c>b) then
+insert into tempp values ('valid');
+return true;
+else
+insert into tempp values ('invalid');
+return false;
+end if;
+end; //
+ delimiter ;
+ select FUN(1,1,100) FROM dual;
+ select fun(5,4,6) from dual;
+ truncate tempp;
+ select*from tempp;
+ 
+ 
